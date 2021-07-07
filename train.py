@@ -138,36 +138,47 @@ def train_function(index, args):
             para_train_loader = pl.ParallelLoader(train_dataloader, [device]).per_device_loader(device)
             batch = next(para_train_loader)
      
-        """
+        
         if len(batch) == 2:
             text1, text2 = batch
             embeddings_a = model(**text1.to(device))
             embeddings_b = model(**text2.to(device))
-            #embeddings_a = torch_xla.core.functions.all_gather(embeddings_a)
-            #embeddings_b = torch_xla.core.functions.all_gather(embeddings_b)
+            
+            embeddings_a = torch_xla.core.functions.all_gather(embeddings_a)
+            embeddings_b = torch_xla.core.functions.all_gather(embeddings_b)
         else:
             text1, text2, text3 = batch
             embeddings_a = model(**text1.to(device))
             embeddings_b1 = model(**text2.to(device))
             embeddings_b2 = model(**text3.to(device))
+
+            embeddings_a = torch_xla.core.functions.all_gather(embeddings_a)
+            embeddings_b1 = torch_xla.core.functions.all_gather(embeddings_b1)
+            embeddings_b2 = torch_xla.core.functions.all_gather(embeddings_b2)
+
             embeddings_b = torch.cat([embeddings_b1, embeddings_b2])
 
-            #embeddings_a = torch_xla.core.functions.all_gather(embeddings_a)
-            #embeddings_b = torch_xla.core.functions.all_gather(embeddings_b)
-
         """
+        if False and xm.is_master_ordinal():
+            for text in batch:
+                print(xm.get_ordinal(), tokenizer.convert_ids_to_tokens(text['input_ids'][0])[0:20])
+
         reps = [model(**text.to(device)) for text in batch]
         embeddings_a = reps[0]
         embeddings_b = torch.cat(reps[1:])
+        #xm.master_print(embeddings_b.shape)
 
         embeddings_a = torch_xla.core.functions.all_gather(embeddings_a)
         embeddings_b = torch_xla.core.functions.all_gather(embeddings_b)
+        #xm.master_print(embeddings_b.shape)
+        """
 
         scores = torch.mm(embeddings_a, embeddings_b.transpose(0, 1)) * args.scale
-        #print(scores.shape)
+        #xm.master_print(scores.shape)
 
         labels = torch.tensor(range(len(scores)), dtype=torch.long, device=embeddings_a.device)  # Example a[i] should match with b[i]
         loss = cross_entropy_loss(scores, labels)
+        #xm.master_print(labels)
 
         ## CLIP loss
         #loss = (cross_entropy_loss(scores, labels) + cross_entropy_loss(scores.transpose(x, 0, 1), labels)) / 2
@@ -200,11 +211,11 @@ if __name__ == "__main__":
     parser.add_argument('--steps', type=int, default=2000)
     parser.add_argument('--save_steps', type=int, default=10000)
     parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--nprocs', type=int, default=8)
     parser.add_argument('--scale', type=float, default=20)
     parser.add_argument('data')
     parser.add_argument('output')
     args = parser.parse_args()
 
-
-
-    xmp.spawn(train_function, args=(args,), nprocs=8, start_method='fork')
+    print("Start processes:", args.nprocs)
+    xmp.spawn(train_function, args=(args,), nprocs=args.nprocs, start_method='fork')
