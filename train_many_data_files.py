@@ -13,7 +13,6 @@ import sys
 import argparse
 import gzip
 import json
-from MultiDatasetDataLoader import InputExample, LoggingHandler
 import logging
 import tqdm
 import torch
@@ -27,13 +26,7 @@ import torch_xla.core.xla_model as xm
 import torch_xla.distributed.xla_multiprocessing as xmp
 import torch_xla.distributed.parallel_loader as pl
 import os
-
-#### Just some code to print debug information to stdout
-logging.basicConfig(format='%(asctime)s - %(message)s',
-                    datefmt='%Y-%m-%d %H:%M:%S',
-                    level=logging.INFO,
-                    handlers=[LoggingHandler()])
-#### /print debug information to stdout
+from shutil import copyfile
 
 
 from transformers import (
@@ -134,10 +127,12 @@ def train_function(index, args, queues, weights):
      
         ### Compute cross-entropy loss
         labels = torch.tensor(range(len(scores)), dtype=torch.long, device=embeddings_a.device)  # Example a[i] should match with b[i]
-        loss = cross_entropy_loss(scores, labels)
+        
+        ## One-way loss
+        #loss = cross_entropy_loss(scores, labels)
       
-        ## CLIP loss
-        #loss = (cross_entropy_loss(scores, labels) + cross_entropy_loss(scores.transpose(x, 0, 1), labels)) / 2
+        ## Symmetric loss as in CLIP
+        loss = (cross_entropy_loss(scores, labels) + cross_entropy_loss(scores.transpose(0, 1), labels)) / 2
         
         # Backward pass
         optimizer.zero_grad()
@@ -195,6 +190,20 @@ if __name__ == "__main__":
     parser.add_argument('output')
     args = parser.parse_args()
 
+    logging.info("Output: "+args.output)
+    if os.path.exists(args.output):
+        print("Output folder already exists. Exit!")
+        exit()
+
+    # Write train script to output path
+    os.makedirs(args.output, exist_ok=True)
+
+    train_script_path = os.path.join(args.output, 'train_script.py')
+    copyfile(__file__, train_script_path)
+    with open(train_script_path, 'a') as fOut:
+        fOut.write("\n\n# Script was called via:\n#python " + " ".join(sys.argv))
+
+
 
     #Load data config
     with open(args.data_config) as fIn:
@@ -216,4 +225,7 @@ if __name__ == "__main__":
     print("Start processes:", args.nprocs)
     xmp.spawn(train_function, args=(args, queues, weights), nprocs=args.nprocs, start_method='fork')
     print("Training done")
+    print("It might be that not all processes exit automatically. In that case you must manually kill this process.")
+    print("With 'pkill python' you can kill all remaining python processes")
+    exit()
 

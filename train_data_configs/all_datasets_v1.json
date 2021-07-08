@@ -1,0 +1,582 @@
+[
+    {
+        "name": "stackexchange_title_body/skeptics.stackexchange.com.jsonl.gz",
+        "lines": 10009,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/writers.stackexchange.com.jsonl.gz",
+        "lines": 10157,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/astronomy.stackexchange.com.jsonl.gz",
+        "lines": 10462,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/vi.stackexchange.com.jsonl.gz",
+        "lines": 10551,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/cstheory.stackexchange.com.jsonl.gz",
+        "lines": 10642,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/engineering.stackexchange.com.jsonl.gz",
+        "lines": 10753,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/french.stackexchange.com.jsonl.gz",
+        "lines": 10794,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/economics.stackexchange.com.jsonl.gz",
+        "lines": 11115,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/anime.stackexchange.com.jsonl.gz",
+        "lines": 11444,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/islam.stackexchange.com.jsonl.gz",
+        "lines": 11853,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/expressionengine.stackexchange.com.jsonl.gz",
+        "lines": 11866,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/politics.stackexchange.com.jsonl.gz",
+        "lines": 11894,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/history.stackexchange.com.jsonl.gz",
+        "lines": 12021,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/christianity.stackexchange.com.jsonl.gz",
+        "lines": 12108,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/boardgames.stackexchange.com.jsonl.gz",
+        "lines": 12149,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/civicrm.stackexchange.com.jsonl.gz",
+        "lines": 12543,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/craftcms.stackexchange.com.jsonl.gz",
+        "lines": 12574,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/hinduism.stackexchange.com.jsonl.gz",
+        "lines": 13450,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/networkengineering.stackexchange.com.jsonl.gz",
+        "lines": 13454,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/german.stackexchange.com.jsonl.gz",
+        "lines": 13950,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/philosophy.stackexchange.com.jsonl.gz",
+        "lines": 14829,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/gardening.stackexchange.com.jsonl.gz",
+        "lines": 15136,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/space.stackexchange.com.jsonl.gz",
+        "lines": 15142,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/bicycles.stackexchange.com.jsonl.gz",
+        "lines": 16353,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/quant.stackexchange.com.jsonl.gz",
+        "lines": 17261,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/puzzling.stackexchange.com.jsonl.gz",
+        "lines": 17851,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/law.stackexchange.com.jsonl.gz",
+        "lines": 17941,
+        "weight": 1
+    },
+    {
+        "name": "flickr30k_captions.jsonl.gz",
+        "lines": 317695,
+        "weight": 1
+    },
+    {
+        "name": "coco_captions.jsonl.gz",
+        "lines": 828395,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_body/arduino.stackexchange.com.jsonl.gz",
+        "lines": 19553,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/aviation.stackexchange.com.jsonl.gz",
+        "lines": 20139,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/softwarerecs.stackexchange.com.jsonl.gz",
+        "lines": 20142,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/movies.stackexchange.com.jsonl.gz",
+        "lines": 20181,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/music.stackexchange.com.jsonl.gz",
+        "lines": 20636,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/emacs.stackexchange.com.jsonl.gz",
+        "lines": 21055,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/dsp.stackexchange.com.jsonl.gz",
+        "lines": 21252,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/japanese.stackexchange.com.jsonl.gz",
+        "lines": 22056,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/mechanics.stackexchange.com.jsonl.gz",
+        "lines": 22868,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/crypto.stackexchange.com.jsonl.gz",
+        "lines": 23231,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/cooking.stackexchange.com.jsonl.gz",
+        "lines": 23705,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/photo.stackexchange.com.jsonl.gz",
+        "lines": 23753,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/workplace.stackexchange.com.jsonl.gz",
+        "lines": 24189,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/biology.stackexchange.com.jsonl.gz",
+        "lines": 24447,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/bitcoin.stackexchange.com.jsonl.gz",
+        "lines": 25374,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/worldbuilding.stackexchange.com.jsonl.gz",
+        "lines": 26763,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/datascience.stackexchange.com.jsonl.gz",
+        "lines": 27397,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/ux.stackexchange.com.jsonl.gz",
+        "lines": 29403,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/webapps.stackexchange.com.jsonl.gz",
+        "lines": 29697,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/graphicdesign.stackexchange.com.jsonl.gz",
+        "lines": 30233,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/raspberrypi.stackexchange.com.jsonl.gz",
+        "lines": 30625,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/money.stackexchange.com.jsonl.gz",
+        "lines": 32021,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/judaism.stackexchange.com.jsonl.gz",
+        "lines": 32028,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/ethereum.stackexchange.com.jsonl.gz",
+        "lines": 32760,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/academia.stackexchange.com.jsonl.gz",
+        "lines": 34331,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/chemistry.stackexchange.com.jsonl.gz",
+        "lines": 34506,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/webmasters.stackexchange.com.jsonl.gz",
+        "lines": 34559,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/meta.stackoverflow.com.jsonl.gz",
+        "lines": 36456,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_body/cs.stackexchange.com.jsonl.gz",
+        "lines": 38314,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_body/travel.stackexchange.com.jsonl.gz",
+        "lines": 41227,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_body/rpg.stackexchange.com.jsonl.gz",
+        "lines": 42303,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_body/codereview.stackexchange.com.jsonl.gz",
+        "lines": 45765,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_body/gamedev.stackexchange.com.jsonl.gz",
+        "lines": 46485,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_body/android.stackexchange.com.jsonl.gz",
+        "lines": 51608,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_body/softwareengineering.stackexchange.com.jsonl.gz",
+        "lines": 53942,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_body/security.stackexchange.com.jsonl.gz",
+        "lines": 58000,
+        "weight": 4
+    },
+    {
+        "name": "stackexchange_title_body/diy.stackexchange.com.jsonl.gz",
+        "lines": 60083,
+        "weight": 4
+    },
+    {
+        "name": "stackexchange_title_body/scifi.stackexchange.com.jsonl.gz",
+        "lines": 61528,
+        "weight": 4
+    },
+    {
+        "name": "stackexchange_title_body/mathematica.stackexchange.com.jsonl.gz",
+        "lines": 73131,
+        "weight": 4
+    },
+    {
+        "name": "TriviaQA_pairs.jsonl.gz",
+        "lines": 73346,
+        "weight": 4
+    },
+    {
+        "name": "stackexchange_title_body/drupal.stackexchange.com.jsonl.gz",
+        "lines": 79717,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_body/blender.stackexchange.com.jsonl.gz",
+        "lines": 80766,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_body/dba.stackexchange.com.jsonl.gz",
+        "lines": 81871,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_body/ell.stackexchange.com.jsonl.gz",
+        "lines": 83271,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_body/meta.stackexchange.com.jsonl.gz",
+        "lines": 83510,
+        "weight": 5
+    },
+    {
+        "name": "squad_pairs.jsonl.gz",
+        "lines": 87599,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_body/gaming.stackexchange.com.jsonl.gz",
+        "lines": 88912,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_body/sharepoint.stackexchange.com.jsonl.gz",
+        "lines": 94011,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_body/magento.stackexchange.com.jsonl.gz",
+        "lines": 99991,
+        "weight": 6
+    },
+    {
+        "name": "NQ-train_pairs.jsonl.gz",
+        "lines": 100231,
+        "weight": 6
+    },
+    {
+        "name": "stackexchange_title_body/wordpress.stackexchange.com.jsonl.gz",
+        "lines": 100474,
+        "weight": 6
+    },
+    {
+        "name": "SimpleWiki.jsonl.gz",
+        "lines": 102225,
+        "weight": 6
+    },
+    {
+        "name": "quora_duplicates.jsonl.gz",
+        "lines": 103663,
+        "weight": 6
+    },
+    {
+        "name": "stackexchange_title_body/salesforce.stackexchange.com.jsonl.gz",
+        "lines": 105260,
+        "weight": 6
+    },
+    {
+        "name": "stackexchange_title_body/english.stackexchange.com.jsonl.gz",
+        "lines": 109522,
+        "weight": 6
+    },
+    {
+        "name": "stackexchange_title_body/apple.stackexchange.com.jsonl.gz",
+        "lines": 110622,
+        "weight": 6
+    },
+    {
+        "name": "altlex.jsonl.gz",
+        "lines": 112696,
+        "weight": 6
+    },
+    {
+        "name": "searchQA_question_topSnippet.jsonl.gz",
+        "lines": 117384,
+        "weight": 7
+    },
+    {
+        "name": "stackexchange_title_body/mathoverflow.net.jsonl.gz",
+        "lines": 120851,
+        "weight": 7
+    },
+    {
+        "name": "wikihow.jsonl.gz",
+        "lines": 128542,
+        "weight": 7
+    },
+    {
+        "name": "stackexchange_title_body/gis.stackexchange.com.jsonl.gz",
+        "lines": 131000,
+        "weight": 7
+    },
+    {
+        "name": "stackexchange_title_body/electronics.stackexchange.com.jsonl.gz",
+        "lines": 143582,
+        "weight": 8
+    },
+    {
+        "name": "stackexchange_title_body/physics.stackexchange.com.jsonl.gz",
+        "lines": 173307,
+        "weight": 10
+    },
+    {
+        "name": "stackexchange_title_body/stats.stackexchange.com.jsonl.gz",
+        "lines": 173466,
+        "weight": 10
+    },
+    {
+        "name": "sentence-compression.jsonl.gz",
+        "lines": 180000,
+        "weight": 10
+    },
+    {
+        "name": "stackexchange_title_body/unix.stackexchange.com.jsonl.gz",
+        "lines": 185997,
+        "weight": 10
+    },
+    {
+        "name": "stackexchange_title_body/tex.stackexchange.com.jsonl.gz",
+        "lines": 202954,
+        "weight": 11
+    },
+    {
+        "name": "stackexchange_duplicate_questions_title-body_title-body.jsonl.gz",
+        "lines": 250460,
+        "weight": 14
+    },
+    {
+        "name": "stackexchange_duplicate_questions_body_body.jsonl.gz",
+        "lines": 250519,
+        "weight": 14
+    },
+    {
+        "name": "stackexchange_title_body/serverfault.com.jsonl.gz",
+        "lines": 270904,
+        "weight": 15
+    },
+    {
+        "name": "AllNLI_2cols.jsonl.gz",
+        "lines": 277230,
+        "weight": 15
+    },
+    {
+        "name": "stackexchange_duplicate_questions_title_title.jsonl.gz",
+        "lines": 304525,
+        "weight": 17
+    },
+    {
+        "name": "eli5_question_answer.jsonl.gz",
+        "lines": 325475,
+        "weight": 18
+    },
+    {
+        "name": "stackexchange_title_body/askubuntu.com.jsonl.gz",
+        "lines": 347925,
+        "weight": 19
+    },
+    {
+        "name": "stackexchange_title_body/superuser.com.jsonl.gz",
+        "lines": 435463,
+        "weight": 24
+    },
+    {
+        "name": "stackexchange_title_body/small_stackexchanges.jsonl.gz",
+        "lines": 448146,
+        "weight": 24
+    },
+    {
+        "name": "msmarco-query_passage.jsonl.gz",
+        "lines": 532751,
+        "weight": 29
+    },
+    {
+        "name": "yahoo_answers_title_question.jsonl.gz",
+        "lines": 659896,
+        "weight": 36
+    },
+    {
+        "name": "yahoo_answers_question_answer.jsonl.gz",
+        "lines": 681164,
+        "weight": 37
+    },
+    {
+        "name": "codesearchnet.jsonl.gz",
+        "lines": 1151414,
+        "weight": 54
+    },
+    {
+        "name": "yahoo_answers_title_answer.jsonl.gz",
+        "lines": 1198260,
+        "weight": 54
+    },
+    {
+        "name": "stackexchange_title_body/math.stackexchange.com.jsonl.gz",
+        "lines": 1338443,
+        "weight": 54
+    },
+    {
+        "name": "gooaq_pairs.jsonl.gz",
+        "lines": 3012496,
+        "weight": 54
+    },
+    {
+        "name": "stackexchange_title_body/stackoverflow.com-Posts.jsonl.gz",
+        "lines": 18562443,
+        "weight": 54
+    },
+    {
+        "name": "S2ORC_citation_pairs.jsonl.gz",
+        "lines": 52603982,
+        "weight": 54
+    },
+    {
+        "name": "PAQ_pairs.jsonl.gz",
+        "lines": 64371441,
+        "weight": 54
+    },
+    {
+        "name": "WikiAnswers_pairs.jsonl.gz",
+        "lines": 77427422,
+        "weight": 54
+    }
+]
