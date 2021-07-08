@@ -68,11 +68,8 @@ class AutoModelForSentenceEmbedding(nn.Module):
 
 
 
-def train_function(index, args, queues, weights):
-    if args.same_datasets_on_devices:
-        rnd = random.Random(42)     #Same datasets in the processes
-    else:
-        rnd = random.Random(index)  #Different datasets in the processes
+def train_function(index, args, queues, dataset_indices):
+    dataset_rnd = random.Random(index % args.data_world_size)  #Defines which dataset to use in every step
     tokenizer = AutoTokenizer.from_pretrained(args.model)
     model = AutoModelForSentenceEmbedding(args.model, tokenizer)
     
@@ -99,7 +96,7 @@ def train_function(index, args, queues, weights):
     for global_step in tqdm.trange(args.steps, disable=not xm.is_master_ordinal()):
         
         #### Get the batch data
-        dataset_idx = rnd.choice(weights)
+        dataset_idx = dataset_rnd.choice(dataset_indices)
         text1 = []
         text2 = []
         for _ in range(args.batch_size):
@@ -149,7 +146,7 @@ def train_function(index, args, queues, weights):
             model.save_pretrained(output_path)
           
             
-    output_path = os.path.join(args.output)
+    output_path = os.path.join(args.output, "final")
     xm.master_print("save model final: "+ output_path)
     model.save_pretrained(output_path)
 
@@ -183,9 +180,9 @@ if __name__ == "__main__":
     parser.add_argument('--save_steps', type=int, default=10000)
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--nprocs', type=int, default=8)
+    parser.add_argument('--data_world_size', type=int, default=2, help="How many different dataset should be included in every train step. Cannot be larger than nprocs")
     parser.add_argument('--scale', type=float, default=20)
-    parser.add_argument('--data_folder', default="~/data", help="Folder with your dataset files")
-    parser.add_argument("--same_datasets_on_devices", action="store_true", help="If set, all devices will sample data from the same dataset")
+    parser.add_argument('--data_folder', default="/data", help="Folder with your dataset files")
     parser.add_argument('data_config', help="A data_config.json file")
     parser.add_argument('output')
     args = parser.parse_args()
@@ -197,6 +194,9 @@ if __name__ == "__main__":
 
     # Write train script to output path
     os.makedirs(args.output, exist_ok=True)
+
+    data_config_path = os.path.join(args.output, 'data_config.json')
+    copyfile(args.data_config, data_config_path)
 
     train_script_path = os.path.join(args.output, 'train_script.py')
     copyfile(__file__, train_script_path)
@@ -211,7 +211,7 @@ if __name__ == "__main__":
 
     threads = []
     queues = []
-    weights = []
+    dataset_indices = []
     for data in data_config:
         data_idx = len(queues)
         queue = mp.Queue(maxsize=args.nprocs*args.batch_size)
@@ -219,11 +219,11 @@ if __name__ == "__main__":
         th.start()
         threads.append(th)
         queues.append(queue)
-        weights.extend([data_idx]*data['weight'])
+        dataset_indices.extend([data_idx]*data['weight'])
 
 
     print("Start processes:", args.nprocs)
-    xmp.spawn(train_function, args=(args, queues, weights), nprocs=args.nprocs, start_method='fork')
+    xmp.spawn(train_function, args=(args, queues, dataset_indices), nprocs=args.nprocs, start_method='fork')
     print("Training done")
     print("It might be that not all processes exit automatically. In that case you must manually kill this process.")
     print("With 'pkill python' you can kill all remaining python processes")
