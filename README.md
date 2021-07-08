@@ -42,4 +42,10 @@ Check the other parameters in train_single_data_file.py to modify the model, the
 
 
 ## Multi-Dataset File Training
-I'm currently working on this. Code will be updated.
+
+You need a json file that specifies which dataset.jsonl.gz to load. See `traon_data_configs` for an example.
+
+Run the code with:
+```
+python train_many_data_files.py train_data_configs/small_multi_dataset_train.json output/yor_model
+```
