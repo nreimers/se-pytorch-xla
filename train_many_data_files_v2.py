@@ -99,8 +99,8 @@ def train_function(index, args, queue):
         
 
         if len(batch[0]) == 2: #(anchor, positive)
-            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=128, truncation=True, padding="max_length")
-            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=128, truncation=True, padding="max_length")
+            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=args.max_length, truncation=True, padding="max_length")
+            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=args.max_length, truncation=True, padding="max_length")
 
             ### Compute embeddings
             embeddings_a = model(**text1.to(device))
@@ -120,9 +120,9 @@ def train_function(index, args, queue):
             loss = (cross_entropy_loss(scores, labels) + cross_entropy_loss(scores.transpose(0, 1), labels)) / 2
 
         else:   #(anchor, positive, negative)
-            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=128, truncation=True, padding="max_length")
-            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=128, truncation=True, padding="max_length")
-            text3 = tokenizer([b[2] for b in batch], return_tensors="pt", max_length=128, truncation=True, padding="max_length")
+            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=args.max_length, truncation=True, padding="max_length")
+            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=args.max_length, truncation=True, padding="max_length")
+            text3 = tokenizer([b[2] for b in batch], return_tensors="pt", max_length=args.max_length, truncation=True, padding="max_length")
 
             embeddings_a  = model(**text1.to(device))
             embeddings_b1 = model(**text2.to(device))
@@ -283,6 +283,7 @@ if __name__ == "__main__":
     parser.add_argument('--steps', type=int, default=2000)
     parser.add_argument('--save_steps', type=int, default=10000)
     parser.add_argument('--batch_size', type=int, default=64)
+    parser.add_argument('--max_length', type=int, default=128)
     parser.add_argument('--nprocs', type=int, default=8)
     parser.add_argument('--datasets_per_batch', type=int, default=2, help="Number of datasets per batch")
     parser.add_argument('--scale', type=float, default=20, help="Use 20 for cossim, and 1 when you work with unnormalized embeddings with dot product")
