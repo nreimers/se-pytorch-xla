@@ -173,8 +173,14 @@ def produce_data(args, queue, filepaths, dataset_indices):
     print("producer", "size_per_dataset", size_per_dataset)
     print("producer", "num_same_dataset", num_same_dataset)
     
-
-    datasets = [iter(Dataset(filepath)) for filepath in filepaths]
+    datasets = []
+    for filepath in filepaths:
+        if "reddit_" in filepath:       #Special dataset class for Reddit files
+            data_obj = RedditDataset(filepath)
+        else:
+            data_obj = Dataset(filepath)
+        datasets.append(iter(data_obj)) 
+    
     # Store if dataset is in a 2 col or 3 col format
     num_cols = {idx: len(next(dataset)) for idx, dataset in enumerate(datasets)}
 
@@ -214,6 +220,21 @@ def produce_data(args, queue, filepaths, dataset_indices):
                     queue.put(batch_device)
                       
 
+class RedditDataset:
+    """
+    A class that handles the reddit data files
+    """
+    def __init__(self, filepath):
+        self.filepath = filepath
+
+    def __iter__(self):
+        while True:
+            with gzip.open(self.filepath, "rt") as fIn:
+                    for line in fIn:
+                        data = json.loads(line)
+
+                        if "response" in data and "context" in data:
+                            yield [data["response"], data["context"]]
 
 class Dataset:
     """
@@ -223,21 +244,29 @@ class Dataset:
         self.filepath = filepath
 
     def __iter__(self):
+        max_dataset_size = 10*1000*1000    #Cache small datasets in memory
         dataset = []
         data_format = None
 
-        with gzip.open(self.filepath, "rt") as fIn:
-            for line in fIn:
-                data = json.loads(line)
-                if isinstance(data, dict):
-                    data = data['texts']
+        while dataset is None or len(dataset) == 0:
+            with gzip.open(self.filepath, "rt") as fIn:
+                for line in fIn:
+                    data = json.loads(line)
+                    if isinstance(data, dict):
+                        data = data['texts']
 
-                if data_format is None:
-                    data_format = len(data)
-                
-                assert len(data) == data_format
-                dataset.append(data)
-                yield data
+                    if data_format is None:
+                        data_format = len(data)
+                    
+                    #Ensure that all entries are of the same 2/3 col format
+                    assert len(data) == data_format
+
+                    if dataset is not None:
+                        dataset.append(data)
+                        if len(dataset) >= max_dataset_size:
+                            dataset = None
+
+                    yield data
                 
         # Data loaded. Now stream to the queue
         # Shuffle for each epoch
