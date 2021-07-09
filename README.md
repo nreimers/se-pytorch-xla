@@ -39,11 +39,7 @@ export XRT_TPU_CONFIG="localservice;0;localhost:51011"
 
 ## Evaluation
 
-To evalaute your model on the STS benchmark test set, run:
-
-```
-python eval.py output/your_model
-```
+See [https://github.com/nreimers/se-benchmark](https://github.com/nreimers/se-benchmark) how to evaluate models.
 
 
 ## Multi-Dataset File Training
@@ -67,8 +63,10 @@ Check the other parameters in train_single_data_file.py to modify the model, the
 
 ## Base Model & Batch sizes
 
+In the following table I try to collect the max batch sizes per device for different, recommended models. So far I just tested with these values and the models were running with out-of-memory-exceptions. I.e., larger batch sizes are potentially possible for these models. 
+
 | Model | Max Batch size per Device | Commment |
 | --- | --- | ---- |
 | [nreimers/MiniLM-L6-H384-uncased](https://huggingface.co/nreimers/MiniLM-L6-H384-uncased) | 128 is ok | A small and fast model |
 | distilroberta-base | | |
-| [microsoft/mpnet-base][https://huggingface.co/microsoft/mpnet-base] | | Works usually better than bert-base and roberta-base |
+| [microsoft/mpnet-base](https://huggingface.co/microsoft/mpnet-base) | 64 is ok | Works usually better than bert-base and roberta-base |
