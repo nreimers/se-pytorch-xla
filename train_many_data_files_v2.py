@@ -253,7 +253,7 @@ if __name__ == "__main__":
     parser.add_argument('--model', default='nreimers/MiniLM-L6-H384-uncased')
     parser.add_argument('--steps', type=int, default=2000)
     parser.add_argument('--save_steps', type=int, default=10000)
-    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--nprocs', type=int, default=8)
     parser.add_argument('--datasets_per_batch', type=int, default=2, help="Number of datasets per batch")
     parser.add_argument('--scale', type=float, default=20, help="Use 20 for cossim, and 1 when you work with unnormalized embeddings with dot product")
