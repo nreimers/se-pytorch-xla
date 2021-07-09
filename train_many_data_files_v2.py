@@ -268,8 +268,8 @@ if __name__ == "__main__":
 
     logging.info("Output: "+args.output)
     if os.path.exists(args.output):
-        print("Output folder already exists. Exit!")
-        #exit()
+        print("Output folder already exists.")
+        input("Continue?")
 
     # Write train script to output path
     os.makedirs(args.output, exist_ok=True)
@@ -288,7 +288,7 @@ if __name__ == "__main__":
     with open(args.data_config) as fIn:
         data_config = json.load(fIn)
 
-    queue = mp.Queue(maxsize=2*args.nprocs*args.batch_size)
+    queue = mp.Queue(maxsize=100*args.nprocs)
     
     filepaths = []
     dataset_indices = []
