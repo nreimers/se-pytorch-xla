@@ -93,13 +93,12 @@ def train_function(index, args, queue):
     model.train()
    
     for global_step in tqdm.trange(args.steps, disable=not xm.is_master_ordinal()):
-        #xm.rendezvous("train_step")
         #### Get the batch data
         batch = queue.get()
         #print(index, "batch {}x{}".format(len(batch), ",".join([str(len(b)) for b in batch])))
         
 
-        if len(batch[0]) == 2: #(anchor, positive, negative)
+        if len(batch[0]) == 2: #(anchor, positive)
             text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=128, truncation=True, padding="max_length")
             text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=128, truncation=True, padding="max_length")
 
@@ -111,7 +110,7 @@ def train_function(index, args, queue):
             embeddings_a = torch_xla.core.functions.all_gather(embeddings_a)
             embeddings_b = torch_xla.core.functions.all_gather(embeddings_b)
 
-            ### Compute similarity scores
+            ### Compute similarity scores 512 x 512
             scores = torch.mm(embeddings_a, embeddings_b.transpose(0, 1)) * args.scale
         
             ### Compute cross-entropy loss
@@ -135,7 +134,7 @@ def train_function(index, args, queue):
 
             embeddings_b = torch.cat([embeddings_b1, embeddings_b2])
 
-            ### Compute similarity scores
+            ### Compute similarity scores 512 x 1024
             scores = torch.mm(embeddings_a, embeddings_b.transpose(0, 1)) * args.scale
         
             ### Compute cross-entropy loss
@@ -257,7 +256,7 @@ if __name__ == "__main__":
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--nprocs', type=int, default=8)
     parser.add_argument('--datasets_per_batch', type=int, default=2, help="Number of datasets per batch")
-    parser.add_argument('--scale', type=float, default=20)
+    parser.add_argument('--scale', type=float, default=20, help="Use 20 for cossim, and 1 when you work with unnormalized embeddings with dot product")
     parser.add_argument('--data_folder', default="/data", help="Folder with your dataset files")
     parser.add_argument('data_config', help="A data_config.json file")
     parser.add_argument('output')
