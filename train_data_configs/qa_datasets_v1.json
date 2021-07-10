@@ -1,22 +1,22 @@
 [
     {
-        "name": "NQ-train_pairs.jsonl.gz",
+        "name": "NQ-train_pairs.json.gz",
         "lines": 100231,
-        "weight": 6
+        "weight": 2
     },
     {
-        "name": "msmarco-query_passage_negative.jsonl.gz",
+        "name": "msmarco-query_passage_negative.json.gz",
         "lines": 9144553,
-        "weight": 29
+        "weight": 180
     },
     {
-        "name": "yahoo_answers_title_answer.jsonl.gz",
+        "name": "yahoo_answers_title_answer.json.gz",
         "lines": 1198260,
-        "weight": 54
+        "weight": 20
     },
     {
-        "name": "gooaq_pairs.jsonl.gz",
+        "name": "gooaq_pairs.json.gz",
         "lines": 3012496,
-        "weight": 54
+        "weight": 60
     }
 ]
