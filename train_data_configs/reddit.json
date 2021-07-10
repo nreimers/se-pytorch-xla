@@ -1,0 +1,6 @@
+[
+    {"name": "reddit/reddit_2015.jsonl.gz", "weight": 100},
+    {"name": "reddit/reddit_2016.jsonl.gz", "weight": 100},
+    {"name": "reddit/reddit_2017.jsonl.gz", "weight": 100},
+    {"name": "reddit/reddit_2018.jsonl.gz", "weight": 100}
+]

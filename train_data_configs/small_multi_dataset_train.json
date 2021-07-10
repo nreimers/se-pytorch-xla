@@ -1,5 +1,5 @@
 [
     {"name": "gooaq_pairs.jsonl.gz", "weight": 100},
     {"name": "msmarco-query_passage.jsonl.gz", "weight": 100},
-    {"name": "AllNLI_2cols.jsonl.gz", "weight": 100}
+    {"name": "AllNLI.jsonl.gz", "weight": 100}
 ]
