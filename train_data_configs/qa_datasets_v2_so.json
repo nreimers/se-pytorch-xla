@@ -355,11 +355,6 @@
         "weight": 4
     },
     {
-        "name": "TriviaQA_pairs.jsonl.gz",
-        "lines": 73346,
-        "weight": 4
-    },
-    {
         "name": "stackexchange_title_best_voted_answer_jsonl/drupal.stackexchange.com.jsonl.gz",
         "lines": 79717,
         "weight": 4
