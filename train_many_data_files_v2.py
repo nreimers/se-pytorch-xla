@@ -337,13 +337,13 @@ if __name__ == "__main__":
 
     total_weight = args.stack_overflow_weight
     if total_weight != 0:
-        import subprocess
+        from subprocess import check_output
         file_length = {}
 
         total_length = 0
         for f in Path(args.stack_overflow_folder).rglob('*.gz'):
             path = f.absolute().as_posix()
-            length = subprocess.call(['wc', '-l', path])
+            length = int(check_output(['wc', '-l', path]).split()[0])
             file_length[path] = length
             total_length += length
         print(total_length)
