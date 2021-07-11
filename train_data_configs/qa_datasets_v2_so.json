@@ -1,0 +1,492 @@
+[
+    {
+        "name": "NQ-train_pairs.json.gz",
+        "lines": 100231,
+        "weight": 5
+    },
+    {
+        "name": "msmarco-query_passage_negative.json.gz",
+        "lines": 9144553,
+        "weight": 47
+    },
+    {
+        "name": "yahoo_answers_title_answer.json.gz",
+        "lines": 1198260,
+        "weight": 47
+    },
+    {
+        "name": "gooaq_pairs.json.gz",
+        "lines": 3012496,
+        "weight": 47
+    },
+    {
+        "name": "searchQA_question_top5_snippets_merged.json.gz",
+        "lines": 582261,
+        "weight": 28
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/skeptics.stackexchange.com.jsonl.gz",
+        "lines": 10009,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/writers.stackexchange.com.jsonl.gz",
+        "lines": 10157,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/astronomy.stackexchange.com.jsonl.gz",
+        "lines": 10462,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/vi.stackexchange.com.jsonl.gz",
+        "lines": 10551,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/cstheory.stackexchange.com.jsonl.gz",
+        "lines": 10642,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/engineering.stackexchange.com.jsonl.gz",
+        "lines": 10753,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/french.stackexchange.com.jsonl.gz",
+        "lines": 10794,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/economics.stackexchange.com.jsonl.gz",
+        "lines": 11115,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/anime.stackexchange.com.jsonl.gz",
+        "lines": 11444,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/islam.stackexchange.com.jsonl.gz",
+        "lines": 11853,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/expressionengine.stackexchange.com.jsonl.gz",
+        "lines": 11866,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/politics.stackexchange.com.jsonl.gz",
+        "lines": 11894,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/history.stackexchange.com.jsonl.gz",
+        "lines": 12021,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/christianity.stackexchange.com.jsonl.gz",
+        "lines": 12108,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/boardgames.stackexchange.com.jsonl.gz",
+        "lines": 12149,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/civicrm.stackexchange.com.jsonl.gz",
+        "lines": 12543,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/craftcms.stackexchange.com.jsonl.gz",
+        "lines": 12574,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/hinduism.stackexchange.com.jsonl.gz",
+        "lines": 13450,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/networkengineering.stackexchange.com.jsonl.gz",
+        "lines": 13454,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/german.stackexchange.com.jsonl.gz",
+        "lines": 13950,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/philosophy.stackexchange.com.jsonl.gz",
+        "lines": 14829,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/gardening.stackexchange.com.jsonl.gz",
+        "lines": 15136,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/space.stackexchange.com.jsonl.gz",
+        "lines": 15142,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/bicycles.stackexchange.com.jsonl.gz",
+        "lines": 16353,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/quant.stackexchange.com.jsonl.gz",
+        "lines": 17261,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/puzzling.stackexchange.com.jsonl.gz",
+        "lines": 17851,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/law.stackexchange.com.jsonl.gz",
+        "lines": 17941,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/arduino.stackexchange.com.jsonl.gz",
+        "lines": 19553,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/aviation.stackexchange.com.jsonl.gz",
+        "lines": 20139,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/softwarerecs.stackexchange.com.jsonl.gz",
+        "lines": 20142,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/movies.stackexchange.com.jsonl.gz",
+        "lines": 20181,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/music.stackexchange.com.jsonl.gz",
+        "lines": 20636,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/emacs.stackexchange.com.jsonl.gz",
+        "lines": 21055,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/dsp.stackexchange.com.jsonl.gz",
+        "lines": 21252,
+        "weight": 1
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/japanese.stackexchange.com.jsonl.gz",
+        "lines": 22056,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/mechanics.stackexchange.com.jsonl.gz",
+        "lines": 22868,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/crypto.stackexchange.com.jsonl.gz",
+        "lines": 23231,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/cooking.stackexchange.com.jsonl.gz",
+        "lines": 23705,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/photo.stackexchange.com.jsonl.gz",
+        "lines": 23753,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/workplace.stackexchange.com.jsonl.gz",
+        "lines": 24189,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/biology.stackexchange.com.jsonl.gz",
+        "lines": 24447,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/bitcoin.stackexchange.com.jsonl.gz",
+        "lines": 25374,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/worldbuilding.stackexchange.com.jsonl.gz",
+        "lines": 26763,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/datascience.stackexchange.com.jsonl.gz",
+        "lines": 27397,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/ux.stackexchange.com.jsonl.gz",
+        "lines": 29403,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/webapps.stackexchange.com.jsonl.gz",
+        "lines": 29697,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/graphicdesign.stackexchange.com.jsonl.gz",
+        "lines": 30233,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/raspberrypi.stackexchange.com.jsonl.gz",
+        "lines": 30625,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/money.stackexchange.com.jsonl.gz",
+        "lines": 32021,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/judaism.stackexchange.com.jsonl.gz",
+        "lines": 32028,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/ethereum.stackexchange.com.jsonl.gz",
+        "lines": 32760,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/academia.stackexchange.com.jsonl.gz",
+        "lines": 34331,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/chemistry.stackexchange.com.jsonl.gz",
+        "lines": 34506,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/webmasters.stackexchange.com.jsonl.gz",
+        "lines": 34559,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/meta.stackoverflow.com.jsonl.gz",
+        "lines": 36456,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/cs.stackexchange.com.jsonl.gz",
+        "lines": 38314,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/travel.stackexchange.com.jsonl.gz",
+        "lines": 41227,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/rpg.stackexchange.com.jsonl.gz",
+        "lines": 42303,
+        "weight": 2
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/codereview.stackexchange.com.jsonl.gz",
+        "lines": 45765,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/gamedev.stackexchange.com.jsonl.gz",
+        "lines": 46485,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/android.stackexchange.com.jsonl.gz",
+        "lines": 51608,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/softwareengineering.stackexchange.com.jsonl.gz",
+        "lines": 53942,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/security.stackexchange.com.jsonl.gz",
+        "lines": 58000,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/diy.stackexchange.com.jsonl.gz",
+        "lines": 60083,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/scifi.stackexchange.com.jsonl.gz",
+        "lines": 61528,
+        "weight": 3
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/mathematica.stackexchange.com.jsonl.gz",
+        "lines": 73131,
+        "weight": 4
+    },
+    {
+        "name": "TriviaQA_pairs.jsonl.gz",
+        "lines": 73346,
+        "weight": 4
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/drupal.stackexchange.com.jsonl.gz",
+        "lines": 79717,
+        "weight": 4
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/blender.stackexchange.com.jsonl.gz",
+        "lines": 80766,
+        "weight": 4
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/dba.stackexchange.com.jsonl.gz",
+        "lines": 81871,
+        "weight": 4
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/ell.stackexchange.com.jsonl.gz",
+        "lines": 83271,
+        "weight": 4
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/meta.stackexchange.com.jsonl.gz",
+        "lines": 83510,
+        "weight": 4
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/gaming.stackexchange.com.jsonl.gz",
+        "lines": 88912,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/sharepoint.stackexchange.com.jsonl.gz",
+        "lines": 94011,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/magento.stackexchange.com.jsonl.gz",
+        "lines": 99991,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/wordpress.stackexchange.com.jsonl.gz",
+        "lines": 100474,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/salesforce.stackexchange.com.jsonl.gz",
+        "lines": 105260,
+        "weight": 5
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/english.stackexchange.com.jsonl.gz",
+        "lines": 109522,
+        "weight": 6
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/apple.stackexchange.com.jsonl.gz",
+        "lines": 110622,
+        "weight": 6
+    },
+    {
+        "name": "altlex.jsonl.gz",
+        "lines": 112696,
+        "weight": 6
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/mathoverflow.net.jsonl.gz",
+        "lines": 120851,
+        "weight": 6
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/gis.stackexchange.com.jsonl.gz",
+        "lines": 131000,
+        "weight": 7
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/electronics.stackexchange.com.jsonl.gz",
+        "lines": 143582,
+        "weight": 7
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/physics.stackexchange.com.jsonl.gz",
+        "lines": 173307,
+        "weight": 9
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/stats.stackexchange.com.jsonl.gz",
+        "lines": 173466,
+        "weight": 9
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/unix.stackexchange.com.jsonl.gz",
+        "lines": 185997,
+        "weight": 9
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/tex.stackexchange.com.jsonl.gz",
+        "lines": 202954,
+        "weight": 10
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/serverfault.com.jsonl.gz",
+        "lines": 270904,
+        "weight": 13
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/askubuntu.com.jsonl.gz",
+        "lines": 347925,
+        "weight": 17
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/superuser.com.jsonl.gz",
+        "lines": 435463,
+        "weight": 21
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/small_stackexchanges.jsonl.gz",
+        "lines": 448146,
+        "weight": 21
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/math.stackexchange.com.jsonl.gz",
+        "lines": 1338443,
+        "weight": 47
+    },
+    {
+        "name": "stackexchange_title_best_voted_answer_jsonl/stackoverflow.com-Posts.jsonl.gz",
+        "lines": 18562443,
+        "weight": 47
+    }
+]

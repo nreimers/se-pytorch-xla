@@ -2,26 +2,26 @@
     {
         "name": "NQ-train_pairs.json.gz",
         "lines": 100231,
-        "weight": 2
+        "weight": 5
     },
     {
         "name": "msmarco-query_passage_negative.json.gz",
         "lines": 9144553,
-        "weight": 180
+        "weight": 47
     },
     {
         "name": "yahoo_answers_title_answer.json.gz",
         "lines": 1198260,
-        "weight": 20
+        "weight": 47
     },
     {
         "name": "gooaq_pairs.json.gz",
         "lines": 3012496,
-        "weight": 60
+        "weight": 47
     },
     {
         "name": "searchQA_question_top5_snippets_merged.json.gz",
         "lines": 582261,
-        "weight": 10
+        "weight": 28
     }
 ]
