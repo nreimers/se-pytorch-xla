@@ -346,9 +346,10 @@ if __name__ == "__main__":
             length = subprocess.call(['wc', '-l', path])
             file_length[path] = length
             total_length += length
+        print(total_length)
+        print(file_length)
 
-        for idx, so_path in enumerate(Path(args.stack_overflow_folder).rglob('*.gz')):
-            path = so_path.absolute().as_posix()
+        for idx, path in enumerate(file_length.keys()):
             filepaths.append(path)
             so_weight = max((file_length[path] / total_length) * total_weight, 1)
             dataset_indices.extend([base_so_idx + idx] * so_weight)
