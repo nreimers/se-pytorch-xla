@@ -339,7 +339,7 @@ if __name__ == "__main__":
     print(so_weight)
     if so_weight != 0:
         for idx, so_path in enumerate(Path(args.stack_overflow_folder).rglob('*.gz')):
-            filepaths.append(so_path)
+            filepaths.append(so_path.absolute().as_posix())
             dataset_indices.extend([base_so_idx + idx] * so_weight)
 
     print(filepaths)
