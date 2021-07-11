@@ -290,7 +290,7 @@ if __name__ == "__main__":
     parser.add_argument('--scale', type=float, default=20, help="Use 20 for cossim, and 1 when you work with unnormalized embeddings with dot product")
     parser.add_argument('--data_folder', default="./data", help="Folder with your dataset files")
     parser.add_argument('--stack_overflow_folder', default="./data/stackexchange_title_best_voted_answer_jsonl")
-    parser.add_argument('--stack_overflow_weight', default="0")
+    parser.add_argument('--stack_overflow_weight', type=int, default="0")
     parser.add_argument('data_config', help="A data_config.json file")
     parser.add_argument('output')
     args = parser.parse_args()
