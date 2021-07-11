@@ -465,11 +465,6 @@
         "weight": 21
     },
     {
-        "name": "stackexchange_title_best_voted_answer_jsonl/small_stackexchanges.jsonl.gz",
-        "lines": 448146,
-        "weight": 21
-    },
-    {
         "name": "stackexchange_title_best_voted_answer_jsonl/math.stackexchange.com.jsonl.gz",
         "lines": 1338443,
         "weight": 47
