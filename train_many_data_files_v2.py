@@ -355,8 +355,6 @@ if __name__ == "__main__":
             dataset_indices.extend([base_so_idx + idx] * so_weight)
             print("%s : %d".format(path, so_weight))
 
-    print(filepaths)
-
     # Start producer
     p = mp.Process(target=produce_data, args=(args, queue, filepaths, dataset_indices))
     p.start()
