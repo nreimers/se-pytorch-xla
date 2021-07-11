@@ -415,11 +415,6 @@
         "weight": 6
     },
     {
-        "name": "altlex.jsonl.gz",
-        "lines": 112696,
-        "weight": 6
-    },
-    {
         "name": "stackexchange_title_best_voted_answer_jsonl/mathoverflow.net.jsonl.gz",
         "lines": 120851,
         "weight": 6
