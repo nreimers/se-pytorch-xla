@@ -27,6 +27,7 @@ import torch_xla.distributed.xla_multiprocessing as xmp
 import torch_xla.distributed.parallel_loader as pl
 import os
 from shutil import copyfile
+from pathlib import Path
 
 
 from transformers import (
@@ -287,7 +288,9 @@ if __name__ == "__main__":
     parser.add_argument('--nprocs', type=int, default=8)
     parser.add_argument('--datasets_per_batch', type=int, default=2, help="Number of datasets per batch")
     parser.add_argument('--scale', type=float, default=20, help="Use 20 for cossim, and 1 when you work with unnormalized embeddings with dot product")
-    parser.add_argument('--data_folder', default="/data", help="Folder with your dataset files")
+    parser.add_argument('--data_folder', default="./data", help="Folder with your dataset files")
+    parser.add_argument('--stack_overflow_folder', default="./data/stackexchange_title_best_voted_answer_jsonl")
+    parser.add_argument('--stack_overflow_weight', default="0")
     parser.add_argument('data_config', help="A data_config.json file")
     parser.add_argument('output')
     args = parser.parse_args()
@@ -321,9 +324,25 @@ if __name__ == "__main__":
     
     filepaths = []
     dataset_indices = []
+    base_so_idx = 0
     for idx, data in enumerate(data_config):
+        weight = data['weight']
+        if weight == 0:
+            continue
         filepaths.append(os.path.join(os.path.expanduser(args.data_folder), data['name']))
-        dataset_indices.extend([idx]*data['weight'])
+        dataset_indices.extend([idx]*weight)
+        base_so_idx = idx + 1
+
+    so_list = Path(args.stack_overflow_folder).rglob('*.gz')
+    so_count = len(so_list)
+    for idx, so_path in enumerate(Path(args.stack_overflow_folder).rglob('*.gz')):
+        weight = args.stack_overflow_weight / so_count
+        if weight == 0:
+            continue
+        filepaths.append(so_path)
+        dataset_indices.extend([base_so_idx + idx] * weight)
+
+    print(filepaths)
 
     # Start producer
     p = mp.Process(target=produce_data, args=(args, queue, filepaths, dataset_indices))
