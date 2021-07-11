@@ -334,7 +334,7 @@ if __name__ == "__main__":
         base_so_idx = idx + 1
 
     so_list = Path(args.stack_overflow_folder).rglob('*.gz')
-    so_count = len(so_list)
+    so_count = len(list(so_list))
     for idx, so_path in enumerate(Path(args.stack_overflow_folder).rglob('*.gz')):
         weight = args.stack_overflow_weight / so_count
         if weight == 0:
