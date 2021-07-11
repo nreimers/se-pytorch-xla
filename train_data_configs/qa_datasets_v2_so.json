@@ -465,13 +465,8 @@
         "weight": 21
     },
     {
-        "name": "stackexchange_title_best_voted_answer_jsonl/math.stackexchange.com.jsonl.gz",
+        "name": "stackexchange_title_best_voted_answer_jsonl/mathoverflow.net.jsonl.gz",
         "lines": 1338443,
-        "weight": 47
-    },
-    {
-        "name": "stackexchange_title_best_voted_answer_jsonl/stackoverflow.com-Posts.jsonl.gz",
-        "lines": 18562443,
         "weight": 47
     }
 ]
