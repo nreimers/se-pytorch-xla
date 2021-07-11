@@ -345,7 +345,7 @@ if __name__ == "__main__":
             path = f.absolute().as_posix()
             length = subprocess.call(['wc', '-l', path])
             file_length[path] = length
-        total_length += length
+            total_length += length
 
         for idx, so_path in enumerate(Path(args.stack_overflow_folder).rglob('*.gz')):
             path = so_path.absolute().as_posix()
