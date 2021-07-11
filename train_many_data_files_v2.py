@@ -353,7 +353,7 @@ if __name__ == "__main__":
             filepaths.append(path)
             so_weight = int(max((file_length[path] / total_length) * total_weight, 1))
             dataset_indices.extend([base_so_idx + idx] * so_weight)
-            print("%s : %d".format(path, so_weight))
+            print("{} : {}".format(path, so_weight))
 
     # Start producer
     p = mp.Process(target=produce_data, args=(args, queue, filepaths, dataset_indices))
