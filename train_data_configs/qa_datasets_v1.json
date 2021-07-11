@@ -18,5 +18,10 @@
         "name": "gooaq_pairs.json.gz",
         "lines": 3012496,
         "weight": 60
+    },
+    {
+        "name": "searchQA_question_top5_snippets_merged.json.gz",
+        "lines": 582261,
+        "weight": 10
     }
 ]
