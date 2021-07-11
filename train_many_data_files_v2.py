@@ -335,12 +335,12 @@ if __name__ == "__main__":
 
     so_list = Path(args.stack_overflow_folder).rglob('*.gz')
     so_count = len(list(so_list))
-    for idx, so_path in enumerate(Path(args.stack_overflow_folder).rglob('*.gz')):
-        weight = args.stack_overflow_weight / so_count
-        if weight == 0:
-            continue
-        filepaths.append(so_path)
-        dataset_indices.extend([base_so_idx + idx] * weight)
+    so_weight = int(args.stack_overflow_weight / so_count)
+    print(so_weight)
+    if so_weight != 0:
+        for idx, so_path in enumerate(Path(args.stack_overflow_folder).rglob('*.gz')):
+            filepaths.append(so_path)
+            dataset_indices.extend([base_so_idx + idx] * so_weight)
 
     print(filepaths)
 
