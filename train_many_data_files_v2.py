@@ -351,7 +351,7 @@ if __name__ == "__main__":
 
         for idx, path in enumerate(file_length.keys()):
             filepaths.append(path)
-            so_weight = int(max((file_length[path] / total_length) * total_weight, 1))
+            so_weight = int((file_length[path] / total_length) * total_weight)
             dataset_indices.extend([base_so_idx + idx] * so_weight)
             print("{} : {}".format(path, so_weight))
 
