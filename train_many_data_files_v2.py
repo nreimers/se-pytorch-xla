@@ -289,8 +289,10 @@ if __name__ == "__main__":
     parser.add_argument('--datasets_per_batch', type=int, default=2, help="Number of datasets per batch")
     parser.add_argument('--scale', type=float, default=20, help="Use 20 for cossim, and 1 when you work with unnormalized embeddings with dot product")
     parser.add_argument('--data_folder', default="./data", help="Folder with your dataset files")
-    parser.add_argument('--stack_overflow_folder', default="./data/stackexchange_title_best_voted_answer_jsonl")
-    parser.add_argument('--stack_overflow_weight', type=int, default="0")
+    parser.add_argument('--stack_overflow_folder', default="./data/stackexchange_titlebody_best_voted_answer_jsonl")
+    parser.add_argument('--stack_overflow_weight', type=int, default="360")
+    parser.add_argument('--stack_overflow_neg_folder', default="./data/stackexchange_titlebody_best_and_down_voted_answer_jsonl")
+    parser.add_argument('--stack_overflow_neg_weight', type=int, default="90")
     parser.add_argument('data_config', help="A data_config.json file")
     parser.add_argument('output')
     args = parser.parse_args()
@@ -324,14 +326,12 @@ if __name__ == "__main__":
     
     filepaths = []
     dataset_indices = []
-    base_so_idx = 0
-    for idx, data in enumerate(data_config):
+    for data in data_config:
         weight = data['weight']
         if weight == 0:
             continue
         filepaths.append(os.path.join(os.path.expanduser(args.data_folder), data['name']))
-        dataset_indices.extend([idx]*weight)
-        base_so_idx = idx + 1
+        dataset_indices.extend([len(filepaths) - 1]*weight)
 
     so_list = Path(args.stack_overflow_folder).rglob('*.gz')
 
@@ -341,7 +341,7 @@ if __name__ == "__main__":
         file_length = {}
 
         total_length = 0
-        for f in Path(args.stack_overflow_folder).rglob('*.gz'):
+        for f in so_list:
             path = f.absolute().as_posix()
             length = int(check_output(['wc', '-l', path]).split()[0])
             file_length[path] = length
@@ -349,10 +349,32 @@ if __name__ == "__main__":
         print(total_length)
         print(file_length)
 
-        for idx, path in enumerate(file_length.keys()):
+        for path in file_length.keys():
             filepaths.append(path)
             so_weight = int((file_length[path] / total_length) * total_weight)
-            dataset_indices.extend([base_so_idx + idx] * so_weight)
+            dataset_indices.extend([len(filepaths) - 1] * so_weight)
+            print("{} : {}".format(path, so_weight))
+
+    so_neg_list = Path(args.stack_overflow_neg_folder).rglob('*.gz')
+
+    total_neg_weight = args.stack_overflow_neg_weight
+    if total_neg_weight != 0:
+        from subprocess import check_output
+        file_length = {}
+
+        total_length = 0
+        for f in so_neg_list:
+            path = f.absolute().as_posix()
+            length = int(check_output(['wc', '-l', path]).split()[0])
+            file_length[path] = length
+            total_length += length
+        print(total_length)
+        print(file_length)
+
+        for path in file_length.keys():
+            filepaths.append(path)
+            so_weight = int((file_length[path] / total_length) * total_weight)
+            dataset_indices.extend([len(filepaths) - 1] * so_weight)
             print("{} : {}".format(path, so_weight))
 
     # Start producer
