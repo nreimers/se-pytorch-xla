@@ -180,8 +180,8 @@ def train_function(index, args, queue):
             xm.master_print("save modelQ : "+ output_pathQ)
             modelQ.save_pretrained(output_pathQ)
             output_pathA = os.path.join(args.output + "A", str(global_step+1))
-            xm.master_print("save modelA : "+ output_pathQ)
-            modelA.save_pretrained(output_pathQ)
+            xm.master_print("save modelA : "+ output_pathA)
+            modelA.save_pretrained(output_pathA)
           
             
     output_pathQ = os.path.join(args.output + "Q", "final")
