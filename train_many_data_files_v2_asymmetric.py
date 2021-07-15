@@ -79,8 +79,8 @@ class AutoModelForSentenceEmbedding(nn.Module):
 
 def train_function(index, args, queue):
     tokenizer = AutoTokenizer.from_pretrained(args.model)
-    modelQ = AutoModelForSentenceEmbedding(args.model, tokenizer, not args.normalize, args.pooling)
-    modelA = AutoModelForSentenceEmbedding(args.model, tokenizer, not args.normalize, args.pooling)
+    modelQ = AutoModelForSentenceEmbedding(args.model, tokenizer, not args.no_normalize, args.pooling)
+    modelA = AutoModelForSentenceEmbedding(args.model, tokenizer, not args.no_normalize, args.pooling)
   
     ### Train Loop
     device = xm.xla_device()
