@@ -39,16 +39,21 @@ from transformers import (
 )
 
 class AutoModelForSentenceEmbedding(nn.Module):
-    def __init__(self, model_name, tokenizer, normalize=True):
+    def __init__(self, model_name, tokenizer, normalize=True, pooling='mean'):
         super(AutoModelForSentenceEmbedding, self).__init__()
 
         self.model = AutoModel.from_pretrained(model_name)
         self.normalize = normalize
         self.tokenizer = tokenizer
+        self.pooling = pooling
 
     def forward(self, **kwargs):
         model_output = self.model(**kwargs)
-        embeddings = self.mean_pooling(model_output, kwargs['attention_mask'])
+        if self.pooling == 'mean':
+            embeddings = self.mean_pooling(model_output, kwargs['attention_mask'])
+        elif self.pooling == 'cls':
+            embeddings = self.cls_pooling(model_output, kwargs['attention_mask'])
+
         if self.normalize:
             embeddings = torch.nn.functional.normalize(embeddings, p=2, dim=1)
 
@@ -58,6 +63,9 @@ class AutoModelForSentenceEmbedding(nn.Module):
         token_embeddings = model_output[0]  # First element of model_output contains all token embeddings
         input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
         return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+
+    def cls_pooling(self, model_output, attention_mask):
+        return model_output[0][:,0]
 
     def save_pretrained(self, output_path):
         if xm.is_master_ordinal():
@@ -71,9 +79,8 @@ class AutoModelForSentenceEmbedding(nn.Module):
 
 def train_function(index, args, queue):
     tokenizer = AutoTokenizer.from_pretrained(args.model)
-    modelQ = AutoModelForSentenceEmbedding(args.model, tokenizer)
-    modelA = AutoModelForSentenceEmbedding(args.model, tokenizer)
-    
+    modelQ = AutoModelForSentenceEmbedding(args.model, tokenizer, not args.normalize, args.pooling)
+    modelA = AutoModelForSentenceEmbedding(args.model, tokenizer, not args.normalize, args.pooling)
   
     ### Train Loop
     device = xm.xla_device()
@@ -310,6 +317,8 @@ if __name__ == "__main__":
     parser.add_argument('--datasets_per_batch', type=int, default=2, help="Number of datasets per batch")
     parser.add_argument('--scale', type=float, default=20, help="Use 20 for cossim, and 1 when you work with unnormalized embeddings with dot product")
     parser.add_argument('--data_folder', default="./data", help="Folder with your dataset files")
+    parser.add_argument('--no_normalize', action="store_true", default=False, help="If set: Embeddings are not normalized")
+    parser.add_argument('--pooling', default='mean')
     parser.add_argument('--stack_overflow_folder', default="./data/stackexchange_title_best_voted_answer_jsonl")
     parser.add_argument('--stack_overflow_weight', type=int, default="360")
     parser.add_argument('--stack_overflow_body_folder', default="./data/stackexchange_titlebody_best_voted_answer_jsonl")
