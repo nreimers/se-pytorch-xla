@@ -116,8 +116,8 @@ def train_function(index, args, queue):
         
 
         if len(batch[0]) == 2: #(anchor, positive)
-            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=args.max_length, truncation=True, padding="max_length")
-            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=args.max_length, truncation=True, padding="max_length")
+            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=args.max_q_length, truncation=True, padding="max_length")
+            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=args.max_a_length, truncation=True, padding="max_length")
 
             ### Compute embeddings
             embeddings_a = modelQ(**text1.to(device))
@@ -137,9 +137,9 @@ def train_function(index, args, queue):
             loss = (cross_entropy_loss(scores, labels) + cross_entropy_loss(scores.transpose(0, 1), labels)) / 2
 
         else:   #(anchor, positive, negative)
-            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=args.max_length, truncation=True, padding="max_length")
-            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=args.max_length, truncation=True, padding="max_length")
-            text3 = tokenizer([b[2] for b in batch], return_tensors="pt", max_length=args.max_length, truncation=True, padding="max_length")
+            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=args.max_q_length, truncation=True, padding="max_length")
+            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=args.max_a_length, truncation=True, padding="max_length")
+            text3 = tokenizer([b[2] for b in batch], return_tensors="pt", max_length=args.max_a_length, truncation=True, padding="max_length")
 
             embeddings_a  = modelQ(**text1.to(device))
             embeddings_b1 = modelA(**text2.to(device))
