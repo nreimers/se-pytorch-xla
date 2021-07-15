@@ -935,7 +935,7 @@
         "weight": 451
     },
     {
-        "name": "msmarco-query_passage_negative_v2.json.gz",
+        "name": "msmarco-query_passage_negative_v2.jsonl.gz",
         "lines": 17579773,
         "weight": 1000
     }
