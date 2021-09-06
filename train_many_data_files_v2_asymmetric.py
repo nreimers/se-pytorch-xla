@@ -9,9 +9,11 @@ import torch.multiprocessing as mp
 import random
 import sys
 import argparse
+import gzip
 import json
 import logging
 import tqdm
+from util.checkpointing import *
 from torch import nn
 import torch
 import torch_xla
@@ -35,18 +37,26 @@ from util.model import AutoModelForSentenceEmbedding
 
 def train_function(index, args, queue):
     tokenizer = AutoTokenizer.from_pretrained(args.model)
-    model = AutoModelForSentenceEmbedding(args.model, tokenizer, args)
+    modelQ = AutoModelForSentenceEmbedding(args.model, tokenizer, not args.no_normalize, args.pooling)
+    modelA = AutoModelForSentenceEmbedding(args.model, tokenizer, not args.no_normalize, args.pooling)
 
     ### Train Loop
     device = xm.xla_device()
-    model = model.to(device)
+    modelQ = modelQ.to(device)
+    modelA = modelA.to(device)
 
     # Instantiate optimizer
-    optimizer = AdamW(params=model.parameters(), lr=2e-5, correct_bias=True)
+    optimizerQ = AdamW(params=modelQ.parameters(), lr=2e-5, correct_bias=True)
+    optimizerA = AdamW(params=modelA.parameters(), lr=2e-5, correct_bias=True)
 
-    lr_scheduler = get_linear_schedule_with_warmup(
-        optimizer=optimizer,
-        num_warmup_steps=args.warmup_steps,
+    lr_schedulerQ = get_linear_schedule_with_warmup(
+        optimizer=optimizerQ,
+        num_warmup_steps=500,
+        num_training_steps=args.steps,
+    )
+    lr_schedulerA = get_linear_schedule_with_warmup(
+        optimizer=optimizerA,
+        num_warmup_steps=500,
         num_training_steps=args.steps,
     )
 
@@ -54,7 +64,8 @@ def train_function(index, args, queue):
     cross_entropy_loss = nn.CrossEntropyLoss()
     max_grad_norm = 1
 
-    model.train()
+    modelQ.train()
+    modelA.train()
 
     for global_step in tqdm.trange(args.steps, disable=not xm.is_master_ordinal()):
         #### Get the batch data
@@ -62,14 +73,14 @@ def train_function(index, args, queue):
         # print(index, "batch {}x{}".format(len(batch), ",".join([str(len(b)) for b in batch])))
 
         if len(batch[0]) == 2:  # (anchor, positive)
-            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=args.max_length_a, truncation=True,
+            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=args.max_q_length, truncation=True,
                               padding="max_length")
-            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=args.max_length_b, truncation=True,
+            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=args.max_a_length, truncation=True,
                               padding="max_length")
 
             ### Compute embeddings
-            embeddings_a = model(**text1.to(device))
-            embeddings_b = model(**text2.to(device))
+            embeddings_a = modelQ(**text1.to(device))
+            embeddings_b = modelA(**text2.to(device))
 
             ### Gather all embedings 
             embeddings_a = torch_xla.core.functions.all_gather(embeddings_a)
@@ -86,16 +97,16 @@ def train_function(index, args, queue):
             loss = (cross_entropy_loss(scores, labels) + cross_entropy_loss(scores.transpose(0, 1), labels)) / 2
 
         else:  # (anchor, positive, negative)
-            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=args.max_length_a, truncation=True,
+            text1 = tokenizer([b[0] for b in batch], return_tensors="pt", max_length=args.max_q_length, truncation=True,
                               padding="max_length")
-            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=args.max_length_b, truncation=True,
+            text2 = tokenizer([b[1] for b in batch], return_tensors="pt", max_length=args.max_a_length, truncation=True,
                               padding="max_length")
-            text3 = tokenizer([b[2] for b in batch], return_tensors="pt", max_length=args.max_length_b, truncation=True,
+            text3 = tokenizer([b[2] for b in batch], return_tensors="pt", max_length=args.max_a_length, truncation=True,
                               padding="max_length")
 
-            embeddings_a = model(**text1.to(device))
-            embeddings_b1 = model(**text2.to(device))
-            embeddings_b2 = model(**text3.to(device))
+            embeddings_a = modelQ(**text1.to(device))
+            embeddings_b1 = modelA(**text2.to(device))
+            embeddings_b2 = modelA(**text3.to(device))
 
             embeddings_a = torch_xla.core.functions.all_gather(embeddings_a)
             embeddings_b1 = torch_xla.core.functions.all_gather(embeddings_b1)
@@ -114,28 +125,43 @@ def train_function(index, args, queue):
             loss = cross_entropy_loss(scores, labels)
 
         # Backward pass
-        optimizer.zero_grad()
+        optimizerQ.zero_grad()
+        optimizerA.zero_grad()
         loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
+        torch.nn.utils.clip_grad_norm_(modelQ.parameters(), max_grad_norm)
+        torch.nn.utils.clip_grad_norm_(modelA.parameters(), max_grad_norm)
 
-        xm.optimizer_step(optimizer, barrier=True)
-        lr_scheduler.step()
+        xm.optimizer_step(optimizerQ, barrier=True)
+        xm.optimizer_step(optimizerA, barrier=True)
+        lr_schedulerQ.step()
+        lr_schedulerA.step()
 
         # Save model
         if (global_step + 1) % args.save_steps == 0:
-            output_path = os.path.join(args.output, str(global_step + 1))
-            xm.master_print("save model: " + output_path)
-            model.save_pretrained(output_path)
+            output_pathQ = os.path.join(args.output + "Q", str(global_step + 1))
+            xm.master_print("save modelQ : " + output_pathQ)
+            modelQ.save_pretrained(output_pathQ)
+            save_optim_state(output_pathQ, optimizerQ, lr_schedulerQ)
+            output_pathA = os.path.join(args.output + "A", str(global_step + 1))
+            xm.master_print("save modelA : " + output_pathA)
+            modelA.save_pretrained(output_pathA)
+            save_optim_state(output_pathA, optimizerA, lr_schedulerA)
 
-    output_path = os.path.join(args.output, "final")
-    xm.master_print("save model final: " + output_path)
-    model.save_pretrained(output_path)
+    output_pathQ = os.path.join(args.output + "Q", "final")
+    xm.master_print("save modelQ final: " + output_pathQ)
+    modelQ.save_pretrained(output_pathQ)
+
+    output_pathA = os.path.join(args.output + "A", "final")
+    xm.master_print("save modelA final: " + output_pathA)
+    modelA.save_pretrained(output_pathA)
 
 
 def produce_data(args, queue, filepaths, dataset_indices):
-    global_batch_size = args.batch_size*args.nprocs    #Global batch size
-    num_same_dataset = int(args.nprocs / args.datasets_per_batch)
+    global_batch_size = args.batch_size * args.nprocs  # Global batch size
+    size_per_dataset = int(global_batch_size / args.datasets_per_batch)  # How many datasets per batch
+    num_same_dataset = int(size_per_dataset / args.batch_size)
     print("producer", "global_batch_size", global_batch_size)
+    print("producer", "size_per_dataset", size_per_dataset)
     print("producer", "num_same_dataset", num_same_dataset)
 
     datasets = []
@@ -143,10 +169,10 @@ def produce_data(args, queue, filepaths, dataset_indices):
         if "reddit_" in filepath:  # Special dataset class for Reddit files
             data_obj = RedditDataset(filepath)
         else:
-            data_obj = Dataset(filepath, args)
+            data_obj = Dataset(filepath)
         datasets.append(iter(data_obj))
-    
-    # Store if dataset is in a 2 col or 3 col format
+
+        # Store if dataset is in a 2 col or 3 col format
     num_cols = {idx: len(next(dataset)) for idx, dataset in enumerate(datasets)}
 
     while True:
@@ -166,14 +192,10 @@ def produce_data(args, queue, filepaths, dataset_indices):
 
             # Get data from this dataset
             dataset = datasets[data_idx]
-            local_batch_size = args.batch_size
-            if batch_format == 3 and args.batch_size_triplets is not None:
-                local_batch_size = args.batch_size_triplets
-
             for _ in range(num_same_dataset):
                 for _ in range(args.nprocs):
-                    batch_device = []   #A batch for one device
-                    while len(batch_device) < local_batch_size:
+                    batch_device = []  # A batch for one device
+                    while len(batch_device) < args.batch_size:
                         sample = next(dataset)
                         in_batch = False
                         for text in sample:
@@ -193,16 +215,17 @@ if __name__ == "__main__":
     parser.add_argument('--model', default='nreimers/MiniLM-L6-H384-uncased')
     parser.add_argument('--steps', type=int, default=2000)
     parser.add_argument('--save_steps', type=int, default=10000)
-    parser.add_argument('--warmup_steps', type=int, default=500)
     parser.add_argument('--batch_size', type=int, default=64)
-    parser.add_argument('--batch_size_triplets', type=int, default=None)
-    parser.add_argument('--max_length_a', type=int, default=128)
-    parser.add_argument('--max_length_b', type=int, default=128)
+    parser.add_argument('--max_q_length', type=int, default=128)
+    parser.add_argument('--max_a_length', type=int, default=256)
     parser.add_argument('--nprocs', type=int, default=8)
     parser.add_argument('--datasets_per_batch', type=int, default=2, help="Number of datasets per batch")
     parser.add_argument('--scale', type=float, default=20,
                         help="Use 20 for cossim, and 1 when you work with unnormalized embeddings with dot product")
     parser.add_argument('--data_folder', default="./data", help="Folder with your dataset files")
+    parser.add_argument('--no_normalize', action="store_true", default=False,
+                        help="If set: Embeddings are not normalized")
+    parser.add_argument('--pooling', default='mean')
     parser.add_argument('--stack_overflow_folder', default="./data/stackexchange_title_best_voted_answer_jsonl")
     parser.add_argument('--stack_overflow_weight', type=int, default="360")
     parser.add_argument('--stack_overflow_body_folder',
@@ -211,17 +234,12 @@ if __name__ == "__main__":
     parser.add_argument('--stack_overflow_neg_folder',
                         default="./data/stackexchange_titlebody_best_and_down_voted_answer_jsonl")
     parser.add_argument('--stack_overflow_neg_weight', type=int, default="36")
-    parser.add_argument('--no_normalize', action="store_true", default=False,
-                        help="If set: Embeddings are not normalized")
-    parser.add_argument('--pooling', default='mean')
-    parser.add_argument('--data_folder', default="/data", help="Folder with your dataset files")
-    parser.add_argument('--no_data_streaming', action="store_true", default=False, help="If set: All data will first be loaded in memory")
     parser.add_argument('data_config', help="A data_config.json file")
     parser.add_argument('output')
     args = parser.parse_args()
 
-    # Ensure num proc is devisible by datasets_per_batch
-    assert (args.nprocs % args.datasets_per_batch) == 0
+    # Ensure global batch size is divisble by data_sample_size
+    assert (args.batch_size * args.nprocs) % args.datasets_per_batch == 0
 
     logging.info("Output: " + args.output)
     if os.path.exists(args.output):

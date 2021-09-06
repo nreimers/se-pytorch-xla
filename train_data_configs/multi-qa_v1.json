@@ -780,7 +780,7 @@
         "weight": 33
     },
     {
-        "name": "TriviaQA_pairs.jsonl.gz",
+        "name": "TriviaQA_pairs.json.gz",
         "lines": 73346,
         "weight": 34
     },
@@ -795,7 +795,7 @@
         "weight": 39
     },
     {
-        "name": "squad_pairs.jsonl.gz",
+        "name": "squad_pairs.json.gz",
         "lines": 87599,
         "weight": 40
     },
@@ -815,7 +815,7 @@
         "weight": 42
     },
     {
-        "name": "NQ-train_pairs.jsonl.gz",
+        "name": "NQ-train_pairs.json.gz",
         "lines": 100231,
         "weight": 46
     },
@@ -825,7 +825,7 @@
         "weight": 46
     },
     {
-        "name": "quora_duplicates_triplets.jsonl.gz",
+        "name": "quora_duplicates_triplets.json.gz",
         "lines": 103663,
         "weight": 47
     },
@@ -845,7 +845,7 @@
         "weight": 62
     },
     {
-        "name": "stackexchange_duplicate_questions_title_title.jsonl.gz",
+        "name": "stackexchange_duplicate_questions_title_title.json.gz",
         "lines": 304525,
         "weight": 69
     },
@@ -875,22 +875,22 @@
         "weight": 104
     },
     {
-        "name": "eli5_question_answer.jsonl.gz",
+        "name": "eli5_question_answer.json.gz",
         "lines": 325475,
         "weight": 147
     },
     {
-        "name": "yahoo_answers_title_question.jsonl.gz",
+        "name": "yahoo_answers_title_question.json.gz",
         "lines": 659896,
         "weight": 149
     },
     {
-        "name": "PAQ_pairs.jsonl.gz",
+        "name": "PAQ_pairs.json.gz",
         "lines": 64371441,
         "weight": 150
     },
     {
-        "name": "WikiAnswers_pairs.jsonl.gz",
+        "name": "WikiAnswers_pairs.json.gz",
         "lines": 77427422,
         "weight": 150
     },
@@ -900,7 +900,7 @@
         "weight": 226
     },
     {
-        "name": "yahoo_answers_title_answer.jsonl.gz",
+        "name": "yahoo_answers_title_answer.json.gz",
         "lines": 1198260,
         "weight": 226
     },
@@ -920,7 +920,7 @@
         "weight": 226
     },
     {
-        "name": "searchQA_question_top5_snippets_merged.jsonl.gz",
+        "name": "searchQA_question_top5_snippets_merged.json.gz",
         "lines": 582261,
         "weight": 263
     },
@@ -930,7 +930,7 @@
         "weight": 451
     },
     {
-        "name": "gooaq_pairs.jsonl.gz",
+        "name": "gooaq_pairs.json.gz",
         "lines": 3012496,
         "weight": 451
     },
