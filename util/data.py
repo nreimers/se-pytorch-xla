@@ -29,11 +29,18 @@ class Dataset:
     def __init__(self, filepath):
         self.filepath = filepath
 
+    def __init__(self, filepath, args):
+        self.filepath = filepath
+        self.args = args
+
     def __iter__(self):
         max_dataset_size = 20 * 1000 * 1000  # Cache small datasets in memory
+        min_dataset_size = 50 * 1000  # Size for the small chunk of the dataset
         dataset = []
+        min_dataset = []
         data_format = None
 
+        print(self.filepath, "load")
         while dataset is None or len(dataset) == 0:
             with gzip.open(self.filepath, "rt") as fIn:
                 for line in fIn:
@@ -49,10 +56,25 @@ class Dataset:
 
                     if dataset is not None:
                         dataset.append(data)
-                        if len(dataset) >= max_dataset_size:
+                        if len(dataset) >= max_dataset_size and not self.args.no_data_streaming:
                             dataset = None
 
-                    yield data
+                    if self.args.no_data_streaming:
+                        min_dataset.append(data)
+                        if len(min_dataset) >= min_dataset_size:
+                            random.shuffle(min_dataset)
+                            for data in min_dataset:
+                                yield data
+                            min_dataset = []
+                    else:
+                        yield data
+
+        print(self.filepath, "fully loaded")
+
+        if len(min_dataset) > 0:
+            random.shuffle(min_dataset)
+            for data in min_dataset:
+                yield data
 
         # Data loaded. Now stream to the queue
         # Shuffle for each epoch

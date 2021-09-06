@@ -46,7 +46,7 @@ def train_function(index, args, queue):
 
     lr_scheduler = get_linear_schedule_with_warmup(
         optimizer=optimizer,
-        num_warmup_steps=500,
+        num_warmup_steps=args.warmup_steps,
         num_training_steps=args.steps,
     )
 
@@ -133,11 +133,9 @@ def train_function(index, args, queue):
 
 
 def produce_data(args, queue, filepaths, dataset_indices):
-    global_batch_size = args.batch_size * args.nprocs  # Global batch size
-    size_per_dataset = int(global_batch_size / args.datasets_per_batch)  # How many datasets per batch
-    num_same_dataset = int(size_per_dataset / args.batch_size)
+    global_batch_size = args.batch_size*args.nprocs    #Global batch size
+    num_same_dataset = int(args.nprocs / args.datasets_per_batch)
     print("producer", "global_batch_size", global_batch_size)
-    print("producer", "size_per_dataset", size_per_dataset)
     print("producer", "num_same_dataset", num_same_dataset)
 
     datasets = []
@@ -145,10 +143,10 @@ def produce_data(args, queue, filepaths, dataset_indices):
         if "reddit_" in filepath:  # Special dataset class for Reddit files
             data_obj = RedditDataset(filepath)
         else:
-            data_obj = Dataset(filepath)
+            data_obj = Dataset(filepath, args)
         datasets.append(iter(data_obj))
-
-        # Store if dataset is in a 2 col or 3 col format
+    
+    # Store if dataset is in a 2 col or 3 col format
     num_cols = {idx: len(next(dataset)) for idx, dataset in enumerate(datasets)}
 
     while True:
@@ -168,10 +166,14 @@ def produce_data(args, queue, filepaths, dataset_indices):
 
             # Get data from this dataset
             dataset = datasets[data_idx]
+            local_batch_size = args.batch_size
+            if batch_format == 3 and args.batch_size_triplets is not None:
+                local_batch_size = args.batch_size_triplets
+
             for _ in range(num_same_dataset):
                 for _ in range(args.nprocs):
-                    batch_device = []  # A batch for one device
-                    while len(batch_device) < args.batch_size:
+                    batch_device = []   #A batch for one device
+                    while len(batch_device) < local_batch_size:
                         sample = next(dataset)
                         in_batch = False
                         for text in sample:
@@ -186,14 +188,14 @@ def produce_data(args, queue, filepaths, dataset_indices):
 
                     queue.put(batch_device)
 
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', default='nreimers/MiniLM-L6-H384-uncased')
     parser.add_argument('--steps', type=int, default=2000)
     parser.add_argument('--save_steps', type=int, default=10000)
+    parser.add_argument('--warmup_steps', type=int, default=500)
     parser.add_argument('--batch_size', type=int, default=64)
+    parser.add_argument('--batch_size_triplets', type=int, default=None)
     parser.add_argument('--max_length_a', type=int, default=128)
     parser.add_argument('--max_length_b', type=int, default=128)
     parser.add_argument('--nprocs', type=int, default=8)
@@ -213,12 +215,13 @@ if __name__ == "__main__":
                         help="If set: Embeddings are not normalized")
     parser.add_argument('--pooling', default='mean')
     parser.add_argument('--data_folder', default="/data", help="Folder with your dataset files")
+    parser.add_argument('--no_data_streaming', action="store_true", default=False, help="If set: All data will first be loaded in memory")
     parser.add_argument('data_config', help="A data_config.json file")
     parser.add_argument('output')
     args = parser.parse_args()
 
-    # Ensure global batch size is divisble by data_sample_size
-    assert (args.batch_size * args.nprocs) % args.datasets_per_batch == 0
+    # Ensure num proc is devisible by datasets_per_batch
+    assert (args.nprocs % args.datasets_per_batch) == 0
 
     logging.info("Output: " + args.output)
     if os.path.exists(args.output):
